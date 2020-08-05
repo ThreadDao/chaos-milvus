@@ -13,7 +13,7 @@ spec:
   containerName: milvus
   stressors:
     cpu:
-      workers: 4
+      workers: 2
       load: 100
   duration: "30s"
   scheduler:
