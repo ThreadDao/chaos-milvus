@@ -1,0 +1,24 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: milvus-mysql-partition
+  namespace: chaos-testing
+spec:
+  action: partition
+  mode: one
+  selector:
+    namespaces:
+      - milvus
+    labelSelectors:
+      "app.kubernetes.io/instance": "zong3-milvus"
+  direction: to
+  target:
+    selector:
+      namespaces:
+        - milvus
+      labelSelectors:
+        "app": "zong3-milvus-mysql"
+    mode: one
+  duration: "60s"
+  scheduler:
+    cron: "@every 65s"

@@ -1,0 +1,13 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: pod-chaos
+metadata:
+  name: dao
+  namespace: milvus
+spec:
+  duration: 10s
+  mode: one
+  scheduler:
+    cron: '@every 20s'
+  selector:
+    labelSelectors:
+      app.kubernetes.io/instance: zong3-milvus

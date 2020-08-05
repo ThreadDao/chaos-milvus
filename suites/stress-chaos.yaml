@@ -1,0 +1,20 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: StressChaos
+metadata:
+  name: milvus-stress-cpu
+  namespace: chaos-testing
+spec:
+  mode: one
+  selector:
+    labelSelectors:
+      "app.kubernetes.io/instance": zong3-milvus
+    namespaces:
+      - milvus
+  containerName: milvus
+  stressors:
+    cpu:
+      workers: 4
+      load: 100
+  duration: "30s"
+  scheduler:
+    cron: '@every 35s'

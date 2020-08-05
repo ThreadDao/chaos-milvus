@@ -1,0 +1,14 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: podchaos
+metadata:
+  name: milvus-mysql-pod-kill
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    namespaces:
+      - milvus
+    labelSelectors:
+      "app.kubernetes.io/instance": "zong3-milvus"
+  scheduler:
+    cron: "@every 20s"
