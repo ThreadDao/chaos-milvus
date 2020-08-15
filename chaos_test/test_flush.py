@@ -4,7 +4,6 @@ from milvus import IndexType, MetricType
 from utils import *
 import time, threading
 import logging
-import pdb
 
 nb = 200000
 dim = 128
