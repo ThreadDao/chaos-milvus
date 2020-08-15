@@ -5,7 +5,6 @@ from chaos import ChaosOpt
 from milvus import Milvus, IndexType
 import datetime
 import time
-import pdb
 
 nb = 200000
 nq = 500
@@ -50,18 +49,17 @@ class TestSearchBase:
                  'index_file_size': index_file_size,
                  'metric_type': MetricType.L2}
         disable_flush(connect)
-        # status = connect.create_collection(param)
-        # assert status.OK()
+        status = connect.create_collection(param)
+        assert status.OK()
         ids_ = [i for i in range(nb)]
-        # status, ids = connect.insert(collection, vectors, ids_)
-        # logging.getLogger().info(status)
-        # assert status.OK()
+        status, ids = connect.insert(collection, vectors, ids_)
+        assert status.OK()
 
         def teardown_function():
             for name in connect.list_collections()[1]:
                 connect.drop_collection(name)
 
-        # request.addfinalizer(teardown_function)
+        request.addfinalizer(teardown_function)
         return collection, ids_
 
     def test_search_burn_cpu(self, connect, setup_function):
@@ -132,7 +130,8 @@ class TestSearchBase:
 
 
 def cal_avg_time(times):
-    # total_seconds = sum(map(lambda f: int(f[0]) * 3600 + int(f[1]) * 60 + int(f[2]), map(lambda f: f.split(":"), times)))
+    # total_seconds = sum(map(lambda f: int(f[0]) * 3600 + int(f[1]) * 60 + int(f[2]), map(lambda f: f.split(":"),
+    # times)))
     total_seconds = sum(map(lambda time: time, times))
     avg_seconds = total_seconds / len(times)
     return str(datetime.timedelta(seconds=avg_seconds))

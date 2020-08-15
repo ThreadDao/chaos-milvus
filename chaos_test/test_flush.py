@@ -59,9 +59,9 @@ class TestFlushBase:
         def teardown_function():
             for name in connect.list_collections()[1]:
                 connect.drop_collection(name)
+
         # request.addfinalizer(teardown_function)
         return collection, len(ids)
-
 
     def _test_flush_kill_pod(self, connect, setup_function):
         """
@@ -97,7 +97,8 @@ class TestFlushBase:
             "action": "partition",
             "direction": "to",
             "target": {
-               "selector": {{"namespaces": ["milvus"]}, {"labelSelectors": {"app": "zong3-milvus-mysql"}}, {"mode": "one"}}
+                "selector": {{"namespaces": ["milvus"]}, {"labelSelectors": {"app": "zong3-milvus-mysql"}},
+                             {"mode": "one"}}
             },
             "duration": "10m",
             "scheduler": {

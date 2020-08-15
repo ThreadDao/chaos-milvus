@@ -72,10 +72,4 @@ def get_avg_costs(times):
     return str(datetime.timedelta(seconds=avg_seconds))
 
 
-if __name__ == '__main__':
-    print(os.path.abspath(__file__))
-    print(pathlib.Path(__file__).parent.absolute())
-    file_path = os.path.join(pathlib.Path().absolute(), "suites/default_config.yaml")
-    print(os.path.abspath(os.getcwd()))
-
 

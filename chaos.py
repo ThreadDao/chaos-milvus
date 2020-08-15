@@ -1,6 +1,4 @@
 from __future__ import print_function
-import json
-import logging
 from utils import *
 from pprint import pprint
 from kubernetes import client, config
@@ -56,45 +54,3 @@ class ChaosOpt(object):
             logging.error("Exception when calling CustomObjectsApi->create_namespaced_custom_object: %s\n" % e)
             raise Exception(str(e))
         return data
-
-
-if __name__ == '__main__':
-    # chaos = ChaosOpt(metadata_name='stress-memory', kind="StressChaos")
-    # chaos = ChaosOpt(metadata_name='milvus-pod-kill', kind="PodChaos")
-    # spec_params = {
-    #         "action": "pod-kill",
-    #         "mode": "one",
-    #         "selector": {
-    #             "namespaces": ["milvus"],
-    #             "labelSelectors": {
-    #                 "app.kubernetes.io/instance": "zong3-milvus"
-    #             }
-    #         },
-    #         "scheduler": {
-    #             "cron": "@every 20s"
-    #         }
-    #     }
-    spec_params = {
-        "mode": "one",
-        "selector": {
-            "labelSelectors": {
-                "app.kubernetes.io/instance": "zong3-milvus"
-            }
-        },
-        "stressors": {
-            "memory": {
-                "workers": 10,
-                "size": "100%"
-            }
-        },
-        "duration": "1m",
-        "scheduler": {
-            "cron": "@every 2m"
-        }
-    }
-    # chaos.create_chaos_object(spec_params=spec_params)
-    # chaos.list_chaos_object()
-    # chaos.delete_chaos_object(metadata_name="stress-memory")
-    # data = chaos.list_chaos_object()
-    file_path = os.path.join(pathlib.Path().absolute(), "suites/default_config.yaml")
-    print(file_path)
