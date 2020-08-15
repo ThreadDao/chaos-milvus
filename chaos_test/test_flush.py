@@ -12,23 +12,25 @@ index_file_size = 1024
 vectors = gen_vectors(nb, dim)
 
 
-# @pytest.fixture(scope="class")
-# def connect(request):
-#     host = '192.168.1.238'
-#     port = 19530
-#     try:
-#         milvus = Milvus(host=host, port=port, try_connect=False)
-#     except Exception as e:
-#         logging.getLogger().error(str(e))
-#         pytest.exit("Milvus server can not connected, exit pytest ...")
-#     def fin():
-#         try:
-#             milvus.close()
-#             pass
-#         except Exception as e:
-#             logging.getLogger().info(str(e))
-#     request.addfinalizer(fin)
-#     return milvus
+@pytest.fixture(scope="class")
+def connect(request):
+    host = '192.168.1.238'
+    port = 19530
+    try:
+        milvus = Milvus(host=host, port=port, try_connect=False)
+    except Exception as e:
+        logging.getLogger().error(str(e))
+        pytest.exit("Milvus server can not connected, exit pytest ...")
+
+    def fin():
+        try:
+            milvus.close()
+            pass
+        except Exception as e:
+            logging.getLogger().info(str(e))
+
+    request.addfinalizer(fin)
+    return milvus
 
 
 class TestFlushBase:
